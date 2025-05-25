@@ -1,9 +1,26 @@
 import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
+class User {
+    private final String username;
+    private final String email;
+    private final String password;
 
+    public User(String username, String email, String password) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+    }
+    public String getEmail() {
+        return email;
+    }
+    public String getpassword() {
+        return password;
+    }
+}
+        
 public class Main {
-    private static final HashMap<String, String> users = new HashMap<>();
+    private static final HashMap<String, User> users = new HashMap<>();
     private static final CardLayout cardLayout = new CardLayout();
     private static final JPanel mainPanel = new JPanel(cardLayout);
 
@@ -68,7 +85,7 @@ public class Main {
             String username = usernameField.getText();
             String password = new String(passwordField.getPassword());
 
-            if (users.containsKey(username) && users.get(username).equals(password)) {
+            if (users.containsKey(username) && users.get(username).getPassword().equals(password))
                 JOptionPane.showMessageDialog(frame, "Login successful! Welcome, " + username + "!", "Success", JOptionPane.INFORMATION_MESSAGE);
                 cardLayout.show(mainPanel, "MainPage");
             } else {
@@ -135,7 +152,7 @@ public class Main {
             } else if (!isValidPassword(password)) {
                 JOptionPane.showMessageDialog(frame, "Password must be at least 6 characters long, contain at least one uppercase letter, and one special character.", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
-                users.put(username, password);
+                users.put(username, new User(username,email,password));
                 JOptionPane.showMessageDialog(frame, "Registration successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
                 regUsernameField.setText("");
                 emailField.setText("");
@@ -179,6 +196,14 @@ public class Main {
     }
 
     private static boolean isValidEmail(String email) {
-        return email.contains("@") && email.contains(".");
+        return email.contains("@") && email.contains(",");
+    }
+    private static boolean isEmailTaken(String email) {
+        for ( User user : users.values()) {
+            if (user.getEmail().equalsIgnoreCase(email)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
