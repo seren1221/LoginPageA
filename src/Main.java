@@ -62,7 +62,7 @@ public class Main {
 
         JButton loginButton = new JButton("Login");
         gbc.gridx = 0;
-        gbc.gridy = 3;
+        gbc.gridy = 4;
         gbc.gridwidth = 2;
         loginButton.addActionListener(e -> {
             String username = usernameField.getText();
@@ -118,12 +118,35 @@ public class Main {
         gbc.gridx = 1;
         gbc.gridy = 3;
         registerPanel.add(regPasswordField, gbc);
+        JCheckBox showRegisterPassword = new JCheckBox("show password");
+        showRegisterPassword.addActionListener( e -> {
+            if (showRegisterPassword.isSelected()) {
+                regPasswordField.setEchoChar((char) 0);
+            } else }
+                regPasswordField.setEchoChar('.');
+        }
+                                               });
+        gbc.gridx = 1;
+        gbc.gridy = 4;
+        registerPanel.add(showRegisterPassword, gbc);
+        JCheckBox showLoginPassword = new JCheckBox("Show Password");
+        showLoginPassword.addActionListener(e -> {
+            if (showLoginPassword.isSelected()) {
+                passwordField.setEchoChar((char) 0);
+            } else {
+                passwordField.setEchoChar('.');
+            }
+        });
+        gbc.gridx = 1;
+        gbc.gridy = 4;
+        loginPanel.add(showLoginPassword, gbc);
 
         JButton registerButton = new JButton("Register");
         gbc.gridx = 0;
-        gbc.gridy = 4;
+        gbc.gridy = 5;
         gbc.gridwidth = 2;
         registerButton.addActionListener(e -> {
+        });
             String username = regUsernameField.getText();
             String email = emailField.getText();
             String password = new String(regPasswordField.getPassword());
